@@ -17,8 +17,8 @@ spring:
   # config:
   #   import: optional:configserver:http://localhost:8085
 
-RATING-SERVICE: ${RATINGSERVICE_URL:"http://ratin-loadb-1n68fwcixrtfr-1521169879.us-east-2.elb.amazonaws.com/"}
-HOTEL-SERVICE: ${HOTELSERVICE_URL:"https://hotel-loadb-1h70pbngp47k4-1733992916.us-east-2.elb.amazonaws.com"}
+RATING-SERVICE: ${RATINGSERVICE_URL:"http://ratin-loadb-i6an5c4kpdz0-2054147921.us-east-2.elb.amazonaws.com/"}
+HOTEL-SERVICE: ${HOTELSERVICE_URL:"http://hotel-loadb-k8aiva487gpr-737544558.us-east-2.elb.amazonaws.com"}
 
 eureka:
   instance:

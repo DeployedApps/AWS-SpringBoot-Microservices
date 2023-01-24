@@ -6,7 +6,7 @@ services:
       DB_URL: "jdbc:postgresql://UserDB:5432/User"
       RATINGSERVICE_URL: "http://RATING-SERVICE"
       HOTELSERVICE_URL: "http://HOTEL-SERVICE/"
-    image: justadvancetechnology/userservice_p2.3
+    image: justadvancetechnology/userservice_wh_3
     build:
       context: ./
       dockerfile: Dockerfile
@@ -14,8 +14,8 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: '2'
-          memory: 4Gb
+          cpus: '1'
+          memory: 2Gb
     ports:
     - target: 80
       x-aws-protocol: http
@@ -23,6 +23,14 @@ services:
     depends_on:
      - UserDB
     restart: unless-stopped
+    healthcheck:
+      # test: curl --fail http://127.0.0.1:80/ || exit 1
+      test: "curl -f http://127.0.0.1:80/actuator/health/ || exit 1"
+      interval: "5m"
+      timeout: "5s"
+      start_period: "10s"
+      retries: 3
+    
 
   UserDB:
     container_name: UserDB
@@ -31,8 +39,8 @@ services:
      replicas: 1
      resources:
        limits:
-         cpus: '1'
-         memory: 2Gb
+         cpus: '0.5'
+         memory: 1Gb
     environment:
       POSTGRES_DB: User
       POSTGRES_USER: User

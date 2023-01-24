@@ -7,7 +7,6 @@ com/jat/UserService/entities/User.class
 com/jat/UserService/entities/Hotel.class
 com/jat/UserService/entities/Rating.class
 com/jat/UserService/config/WebConfig.class
-com/jat/UserService/UserServiceApplication.class
 com/jat/UserService/entities/User$UserBuilder.class
 com/jat/UserService/repositories/UserRepository.class
 com/jat/UserService/external/services/HotelService.class

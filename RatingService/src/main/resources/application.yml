@@ -11,7 +11,8 @@ spring:
       database: microservices
   # config:
   #   import: configserver:http://localhost:8085
-
+#documentation:
+#  baseurl: '/'
 eureka:
   instance:
     prefer-ip-address: true
