@@ -1,0 +1,9 @@
+com/jat/rating/entities/Rating.class
+com/jat/rating/RatingServicesApplication.class
+com/jat/rating/repository/RatingRepository.class
+com/jat/rating/services/impl/RatingServiceImpl.class
+com/jat/rating/services/RatingService.class
+com/jat/rating/config/WebConfig.class
+com/jat/rating/controllers/RatingController.class
+com/jat/rating/component/CorsFilter.class
+com/jat/rating/component/SwaggerPostProccesor.class

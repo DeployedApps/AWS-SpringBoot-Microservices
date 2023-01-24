@@ -1,0 +1,7 @@
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/Document-Server/src/main/java/documentation/single/swagger/SwaggerConfig.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/Document-Server/src/main/java/documentation/single/swagger/MsDocumentationApplication.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/Document-Server/src/main/java/documentation/single/swagger/GatewaySwaggerResourceProvider.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/Document-Server/src/main/java/documentation/single/swagger/SwaggerServicesConfig.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/Document-Server/src/main/java/documentation/single/swagger/SwaggerPostProccesor.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/Document-Server/src/main/java/documentation/single/swagger/config/WebConfig.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/Document-Server/src/main/java/documentation/single/swagger/CorsFilter.java

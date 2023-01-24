@@ -1,52 +1,20 @@
-# version: '3.5'
-
 services:
   serviceregistry:
-  #   profiles: ["all", "api"]
     container_name: serviceregistry
     environment:
       REGISTRY_SERVER: http://serviceregistry:8761/eureka
     image: justadvancetechnology/serviceregitsry_v1
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 0.1Gb
-    # build:
-    #   context: ./ServiceRegitsry
-    #   dockerfile: Dockerfile
     ports:
     - target: 8761
       x-aws-protocol: http
-    #   - 8761:8761
-    # restart: unless-stopped
   
   configserver:
     container_name: configserver
     environment:
       - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka
     image: justadvancetechnology/configserver_v1
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.05'
-          memory: 0.05Gb
-    # build:
-    #   context: ./ConfigServer
-    #   dockerfile: Dockerfile
-    # ports:
-    #   - 8085:8085
     depends_on:
      - serviceregistry
-    # restart: unless-stopped
 
   hotelservice:
     container_name: hotelservice
@@ -54,26 +22,12 @@ services:
       eureka.client.serviceUrl.defaultZone: "http://serviceregistry:8761/eureka"
       DB_URL: "jdbc:postgresql://HotelDB:5432/Hotel"
     image: justadvancetechnology/hotelservice_v1
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 0.1Gb
-    # build:
-    #   context: ./HotelService
-    #   dockerfile: Dockerfile
     ports:
     - target: 8082
       x-aws-protocol: http
-    #   - 8082:8082
     depends_on:
      - HotelDB
      - serviceregistry
-    # restart: unless-stopped
 
   ratingservice:
     container_name: ratingservice
@@ -84,194 +38,75 @@ services:
       RATING: "http://RATING-SERVICE/ratings"
     image: justadvancetechnology/ratingservice_v1
     deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
+      replicas: 1
       resources:
         limits:
-          cpus: '0.1'
-          memory: 0.1Gb
-    # build:
-    #   context: ./RatingService
-    #   dockerfile: Dockerfile
+          cpus: '0.5'
+          memory: 1Gb
     ports:
     - target: 8083
       x-aws-protocol: http
-    #   - 8083:8083
     depends_on:
      - mongodb
+    #  - UserDB
      - serviceregistry
      - hotelservice
-    # restart: unless-stopped
 
-  userservice:
-    container_name: userservice
-    environment:
-      EUREKA_URL: "http://serviceregistry:8761/eureka"
-      DB_URL: "jdbc:postgresql://UserDB:5432/User"
-      RATINGSERVICE_URL: "http://RATING-SERVICE"
-      HOTELSERVICE_URL: "http://HOTEL-SERVICE/"
-    image: justadvancetechnology/userservice_v1
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 0.1Gb
-    # build:
-    #   context: ./UserService
-    #   dockerfile: Dockerfile
-    ports:
-    - target: 8081
-      x-aws-protocol: http
-    #   - 8081:8081
-    depends_on:
-     - UserDB
-     - serviceregistry
-     - ratingservice
-     - hotelservice
-    # restart: unless-stopped
+  # userservice:
+  #   container_name: userservice
+  #   environment:
+  #     EUREKA_URL: "http://serviceregistry:8761/eureka"
+  #     DB_URL: "jdbc:postgresql://UserDB:5432/User"
+  #     RATINGSERVICE_URL: "http://RATING-SERVICE"
+  #     HOTELSERVICE_URL: "http://HOTEL-SERVICE/"
+  #   image: justadvancetechnology/userservice_v1
+  #   ports:
+  #   - target: 8081
+  #     x-aws-protocol: http
+  #   depends_on:
+  #    - UserDB
+  #    - serviceregistry
+  #    - ratingservice
+  #    - hotelservice
 
-  apigateway:
-    container_name: apigateway
-    environment:
-      EUREKA_URL: "http://serviceregistry:8761/eureka"
-      DB_URL: "jdbc:postgresql://UserDB:5432/User"
-      RATING_SERVICE: "lb://RATING-SERVICE"
-      HOTEL_SERVICE: "lb://HOTEL-SERVICE"
-      USER_SERVICE: "lb://USER-SERVICE"
-    image: justadvancetechnology/apigateway_v1
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.05'
-          memory: 0.05Gb
-    # build:
-    #   context: ./ApiGateway
-    #   dockerfile: Dockerfile
-    # ports:
-    #   - 8084:8084
-    depends_on:
-     - UserDB
-     - serviceregistry
-     - ratingservice
-     - hotelservice
-     - userservice
-    # restart: unless-stopped
+  # apigateway:
+  #   container_name: apigateway
+  #   environment:
+  #     EUREKA_URL: "http://serviceregistry:8761/eureka"
+  #     DB_URL: "jdbc:postgresql://UserDB:5432/User"
+  #     RATING_SERVICE: "lb://RATING-SERVICE"
+  #     HOTEL_SERVICE: "lb://HOTEL-SERVICE"
+  #     USER_SERVICE: "lb://USER-SERVICE"
+  #   image: justadvancetechnology/apigateway_v1
+  #   depends_on:
+  #    - UserDB
+  #    - serviceregistry
+  #    - ratingservice
+  #    - hotelservice
+  #    - userservice
 
 
-  UserDB:
-    container_name: UserDB
-    image: postgres
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 0.1Gb
-    environment:
-      POSTGRES_DB: User
-      POSTGRES_USER: User
-      POSTGRES_PASSWORD: User
-    # ports:
-    #   - "5550:5432"
-    # restart: unless-stopped
+  # UserDB:
+  #   container_name: UserDB
+  #   image: postgres
+  #   environment:
+  #     POSTGRES_DB: User
+  #     POSTGRES_USER: User
+  #     POSTGRES_PASSWORD: User
 
   HotelDB:
     container_name: HotelDB
     image: postgres
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 0.1Gb
     environment:
       DB_URL: "jdbc:postgresql://HotelDB:5432/"
       POSTGRES_DB: Hotel
       POSTGRES_USER: Hotel
       POSTGRES_PASSWORD: Hotel
-    # ports:
-    #   - "5551:5432"
-    # restart: unless-stopped
-  
-  # pgadmin:
-  #   container_name: pgadmin_container
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: abc@pg.com
-  #     PGADMIN_DEFAULT_PASSWORD: postgres
-  #   ports:
-  #     - "5555:80"
-  #   restart: unless-stopped
+
 
   mongodb:
     container_name: mongoDB
     image: mongo
-    deploy:
-      x-aws-autoscaling:
-        min: 1
-        max: 2 
-        cpu: 75
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 0.1Gb
-    
-    # ports:
-    #   - 5552:27017
     environment:
-      # - MONGO_INITDB_DATABASE=mongodb
       - MONGO_INITDB_ROOT_USERNAME=mongo
       - MONGO_INITDB_ROOT_PASSWORD=mongo
-    # restart: unless-stopped
-
-  # mongo-express:
-  #   container_name: mongoexpress
-  #   image: mongo-express
-  #   ports:
-  #     - "5553:8081"
-  #   environment:
-  #           - ME_CONFIG_MONGODB_SERVER=mongoDB
-  #           - ME_CONFIG_MONGODB_PORT=27017
-  #           - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
-  #           - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
-  #           - ME_CONFIG_MONGODB_AUTH_USERNAME=mongo
-  #           - ME_CONFIG_MONGODB_AUTH_PASSWORD=mongo
-  #           - ME_CONFIG_BASICAUTH_USERNAME=mongo
-  #           - ME_CONFIG_BASICAUTH_PASSWORD=mongo
-  #   restart: unless-stopped
-
-# services:
-#     nginx:
-#         image: mycompany/webapp
-        # deploy:
-        #   x-aws-autoscaling:
-        #     min: 1
-        #     max: 10 
-        #     cpu: 75
-        #   resources:
-        #     limits:
-        #       cpus: '0.1'
-        #       memory: 0.1Gb
-# deploy:
-#       x-aws-autoscaling:
-#         min: 1
-#         max: 10 #required
-#         cpu: 75
-
-

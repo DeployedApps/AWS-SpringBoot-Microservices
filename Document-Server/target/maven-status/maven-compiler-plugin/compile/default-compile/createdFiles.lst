@@ -1,0 +1,8 @@
+documentation/single/swagger/SwaggerPostProccesor.class
+META-INF/spring-configuration-metadata.json
+documentation/single/swagger/CorsFilter.class
+documentation/single/swagger/SwaggerServicesConfig.class
+documentation/single/swagger/GatewaySwaggerResourceProvider.class
+documentation/single/swagger/SwaggerServicesConfig$SwaggerServices.class
+documentation/single/swagger/config/WebConfig.class
+documentation/single/swagger/MsDocumentationApplication.class

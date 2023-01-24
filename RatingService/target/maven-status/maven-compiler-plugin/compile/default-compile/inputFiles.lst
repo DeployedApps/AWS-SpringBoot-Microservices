@@ -1,0 +1,9 @@
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/controllers/RatingController.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/component/SwaggerPostProccesor.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/entities/Rating.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/repository/RatingRepository.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/config/WebConfig.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/component/CorsFilter.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/services/impl/RatingServiceImpl.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/RatingServicesApplication.java
+/home/praveen/Desktop/GitHub/AWS-SpringBoot-Microservices/RatingService/src/main/java/com/jat/rating/services/RatingService.java
